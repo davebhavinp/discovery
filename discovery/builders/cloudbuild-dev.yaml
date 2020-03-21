@@ -3,18 +3,19 @@ steps:
 - id: build
   name: gcr.io/cloud-builders/docker
   dir: discovery
-  args: ["build", "-t", "gcr.io/$PROJECT_ID/registration:${BRANCH_NAME}-${SHORT_SHA}", "."]
+  args: ["build", "-t", "gcr.io/$PROJECT_ID/discovery:${BRANCH_NAME}-${SHORT_SHA}", "."]
 
 - id: push 
   name: gcr.io/cloud-builders/docker
-  args: ["push", "gcr.io/$PROJECT_ID/registration:${BRANCH_NAME}-${SHORT_SHA}"]
+  args: ["push", "gcr.io/$PROJECT_ID/discovery:${BRANCH_NAME}-${SHORT_SHA}"]
   
 - id: deploy 
   name: "gcr.io/cloud-builders/gke-deploy"
+  dir: discovery
   args:
   - run
   - --filename=kubernetes/deployments/dev/app-deployment-dev.yml
-  - --image=gcr.io/$PROJECT_ID/registration:${BRANCH_NAME}-${SHORT_SHA}
+  - --image=gcr.io/$PROJECT_ID/discovery:${BRANCH_NAME}-${SHORT_SHA}
   - --location=us-east1-b
   - --cluster=discovery-cluster
   
