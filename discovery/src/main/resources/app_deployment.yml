@@ -2,7 +2,7 @@
  apiVersion: apps/v1
  kind: Deployment 
  metadata: 
-   name: discovery-deployment 
+   name: discovery 
    labels: 
      app: discovery
  spec: 
@@ -16,7 +16,7 @@
          app: discovery
      spec: 
        containers: 
-         - name: discovery-app
+         - name: discovery
            image: davebhavinp/discovery:1.0.1
            ports: 
-             - containerPort: 8761
+             - containerPort: 8080

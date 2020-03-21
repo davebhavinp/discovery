@@ -7,6 +7,6 @@
    selector:
      app: discovery
    ports:
-   - port: 8761
-     targetPort: 8761
+   - port: 8080
+     targetPort: 8080
    type: LoadBalancer
