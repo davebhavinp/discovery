@@ -4,7 +4,7 @@ COPY src /tmp/src
 WORKDIR /tmp/
 RUN mvn package
 
-FROM java:11 
+FROM openjdk:11.0-jre
 VOLUME /tmp
 ARG JAR_FILE=/tmp/target/*.jar
 COPY ${JAR_FILE} discovery-service.jar
