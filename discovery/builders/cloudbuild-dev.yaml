@@ -8,13 +8,24 @@ steps:
 - id: push 
   name: gcr.io/cloud-builders/docker
   args: ["push", "gcr.io/$PROJECT_ID/discovery:${BRANCH_NAME}-${SHORT_SHA}"]
+
+- id: Generate deployment manifest
+  name: gcr.io/cloud-builders/gcloud 
+  dir: discovery
+  entrypoint: /bin/sh 
+  args: 
+    - '-c' 
+    - | 
+      sed "s/PROJECT_ID/${PROJECT_ID}/g" kubernetes/deployments/app-deployment-dev.yml | \
+      sed "s/BRANCH_NAME/${BRANCH_NAME}/g" kubernetes/deployments/app-deployment-dev.yml | \
+      sed "s/SHORT_SHA/${SHORT_SHA}/g" kubernetes/deployments/app-deployment-dev.yml > kubernetes/deployments/app-deployment-ready.yml
   
 - id: deploy 
   name: "gcr.io/cloud-builders/gke-deploy"
   dir: discovery
   args:
   - run
-  - --filename=kubernetes/deployments/dev/app-deployment-dev.yml
+  - --filename=kubernetes/deployments/dev/app-deployment-ready.yml
   - --image=gcr.io/$PROJECT_ID/discovery:${BRANCH_NAME}-${SHORT_SHA}
   - --location=us-east1-b
   - --cluster=discovery-cluster
