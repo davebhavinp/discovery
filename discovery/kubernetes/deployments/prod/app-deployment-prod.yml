@@ -20,6 +20,5 @@ spec:
     spec: 
       containers: 
         - name: apiserver
-          image: gcr.io/$PROJECT_ID/discovery:${BRANCH_NAME}-${SHORT_SHA}
           ports: 
             - containerPort: 8080
