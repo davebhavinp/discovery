@@ -2,19 +2,24 @@
 apiVersion: apps/v1
 kind: Deployment 
 metadata: 
-  name: registration-apiserver-prod 
+  name: discovery-apiserver-prod 
 spec: 
   replicas: 1
+  selector: 
+    matchLabels: 
+      app: discovery
+      role: apiserver
+      env: prod
   template: 
     metadata: 
       name: apiserver
       labels: 
-        app: registration
+        app: discovery
         role: apiserver
         env: prod
     spec: 
       containers: 
         - name: apiserver
-          image: gcr.io/discovery-271220/registration:v1
+          image: gcr.io/$PROJECT_ID/discovery:${BRANCH_NAME}-${SHORT_SHA}
           ports: 
             - containerPort: 8080
