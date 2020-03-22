@@ -17,8 +17,8 @@ steps:
     - '-c' 
     - | 
       sed "s/PROJECT_ID/${PROJECT_ID}/g" kubernetes/deployments/dev/app-deployment-dev.yml | \
-      sed "s/BRANCH_NAME/${BRANCH_NAME}/g" kubernetes/deployments/dev/app-deployment-dev.yml | \
-      sed "s/SHORT_SHA/${SHORT_SHA}/g" kubernetes/deployments/dev/app-deployment-dev.yml > kubernetes/deployments/dev/app-deployment-ready.yml
+      sed "s/BRANCH_NAME/${BRANCH_NAME}/g" | \
+      sed "s/SHORT_SHA/${SHORT_SHA}/g" > kubernetes/deployments/dev/app-deployment-ready.yml
   
 - id: deploy 
   name: "gcr.io/cloud-builders/gke-deploy"

@@ -23,3 +23,16 @@ spec:
           image: gcr.io/PROJECT_ID/discovery:BRANCH_NAME-SHORT_SHA
           ports: 
             - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: discovery-apiserver
+spec:
+  selector:
+    app: discovery
+    role: apiserver
+  ports:
+  - port: 8080
+    targetPort: 8080
+  type: LoadBalancer
